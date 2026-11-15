@@ -1,7 +1,7 @@
 ---
 id: "001"
 title: Каркас монорепозитория
-status: in-progress
+status: review
 area: infra
 created: 2026-11-15
 blocked_reason:

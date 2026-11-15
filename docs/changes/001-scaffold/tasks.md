@@ -108,7 +108,7 @@
   - Результат: установка, запуск, тесты, сборка описаны. Отдельно сказано, что
     `pnpm test` и `pnpm test:e2e` требуют запущенного Postgres
     (`docker compose up -d postgres`)
-- [ ] 13. Полный прогон и проверка
+- [x] 13. Полный прогон и проверка
   - `pnpm lint`, `format:check`, `typecheck`, `test`, `build`, `test:e2e` из корня.
   - AC-1, AC-2: свежий `git clone` во временную папку → `cp .env.example .env` →
     `docker compose up` → открыть сайт и админку, создать пользователя, войти.
