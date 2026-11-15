@@ -30,7 +30,7 @@
     форматтер не переписывал документацию. Сгенерированные файлы Payload
     (`payload-types.ts`, `importMap.js`, `migrations/`) исключены.
   - Результат: `pnpm lint` и `pnpm format:check` зелёные
-- [ ] 3. `apps/cms`: Payload из шаблона blank
+- [x] 3. `apps/cms`: Payload из шаблона blank
   - Файлы: `apps/cms/package.json`, `src/payload.config.ts`, `src/collections/Users.ts`,
     `src/collections/Media.ts`, `src/app/(payload)/**` (маршруты админки и API из шаблона),
     `next.config.ts`, `tsconfig.json` (extends base)
