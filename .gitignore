@@ -1,0 +1,38 @@
+# Зависимости
+node_modules/
+.pnpm-store/
+
+# Сборка
+dist/
+build/
+.astro/
+.next/
+coverage/
+
+# Окружение и секреты
+.env
+.env.*
+!.env.example
+
+# Медиа, загруженные в CMS локально
+apps/cms/media/
+
+# Тесты
+playwright-report/
+test-results/
+blob-report/
+
+# Логи и системные файлы
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Локальные настройки Claude
+.claude/settings.local.json
