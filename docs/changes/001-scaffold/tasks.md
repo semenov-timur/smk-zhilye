@@ -45,7 +45,7 @@
   - В dev Payload сам синхронизирует схему (`push`). В production (`next start`,
     CI) миграции применяются при старте.
   - Результат: `pnpm --filter cms build && start` на пустой БД создаёт таблицы
-- [ ] 5. Vitest в `apps/cms` и тест AC-5
+- [x] 5. Vitest в `apps/cms` и тест AC-5
   - Файлы: `apps/cms/vitest.config.ts`, `apps/cms/tests/users-access.test.ts`
   - Тест `AC-5: anonymous GET /api/users returns 403` строит настоящий `Request`
     и отдаёт его REST-обработчику Payload (`REST_GET` из `@payloadcms/next/routes`).
