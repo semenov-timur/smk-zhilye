@@ -23,7 +23,7 @@
     `noUncheckedIndexedAccess`), `pnpm-lock.yaml`
   - Результат: `pnpm install` в корне проходит, в корне есть скрипты
     `lint`, `format`, `format:check`, `typecheck`, `test`, `test:e2e`, `build`, `dev`
-- [ ] 2. Линтер и форматтер
+- [x] 2. Линтер и форматтер
   - Файлы: `eslint.config.js` (flat config: typescript-eslint, eslint-plugin-astro,
     eslint-config-prettier), `.prettierrc.json`, `.prettierignore`
   - Prettier проверяет код, JSON и YAML. `docs/**/*.md` не трогаем, чтобы

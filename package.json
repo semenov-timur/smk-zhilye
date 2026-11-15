@@ -17,6 +17,12 @@
     "build": "pnpm -r --if-present build"
   },
   "devDependencies": {
-    "typescript": "6.0.3"
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "~3.2.1",
+    "prettier": "~3.10.1",
+    "prettier-plugin-astro": "~1.1.2",
+    "typescript": "6.0.3",
+    "typescript-eslint": "~8.72.2"
   }
 }
