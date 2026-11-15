@@ -9,6 +9,7 @@ import sharp from 'sharp'
 
 import { Media } from './collections/Media'
 import { Users } from './collections/Users'
+import { migrations } from './migrations'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -35,6 +36,9 @@ export default buildConfig({
     pool: {
       connectionString: requireEnv('DATABASE_URL'),
     },
+    // В dev схема синхронизируется сама (push). В production миграции
+    // из src/migrations применяются при старте приложения.
+    prodMigrations: migrations,
   }),
   sharp,
 })

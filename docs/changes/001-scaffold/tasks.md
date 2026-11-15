@@ -39,7 +39,7 @@
     (уже в `.gitignore`).
   - Скрипты: `dev`, `build`, `start`, `typecheck` (`tsc --noEmit`), `generate:types`
   - Результат: при запущенном Postgres команда `pnpm --filter cms dev` открывает `/admin` на `:3000`
-- [ ] 4. Начальная миграция БД
+- [x] 4. Начальная миграция БД
   - Файлы: `apps/cms/src/migrations/*` (`payload migrate:create initial`),
     `prodMigrations` в `postgresAdapter`
   - В dev Payload сам синхронизирует схему (`push`). В production (`next start`,
