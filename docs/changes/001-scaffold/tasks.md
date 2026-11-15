@@ -64,7 +64,7 @@
     «CMS: недоступна», страница всё равно отвечает 200.
   - Стили нейтральные (`docs/design-system.md` не заполнен).
   - Результат: главная показывает название компании и статус
-- [ ] 8. Playwright и e2e для AC-3, AC-4
+- [x] 8. Playwright и e2e для AC-3, AC-4
   - Файлы: `apps/site/playwright.config.ts`, `apps/site/e2e/home.spec.ts`
   - `webServer` поднимает три процесса из production-сборок: CMS на `:3000`,
     сайт на `:4321` с настоящей CMS и сайт на `:4322` с `CMS_API_URL=http://127.0.0.1:9`
@@ -74,6 +74,10 @@
   - Тесты: `AC-3: home shows «CMS: доступна» when CMS is up`,
     `AC-4: home returns 200 and shows «CMS: недоступна» when CMS is down`
   - Результат: `pnpm build && pnpm test:e2e` зелёные
+  - **Отклонение:** CMS в e2e работает с отдельной базой `<POSTGRES_DB>_e2e`.
+    Dev и Vitest синхронизируют схему без миграций (push), и CMS в production-режиме
+    на такой базе зависает на интерактивном вопросе. Базу `_e2e` создаёт скрипт
+    `docker/postgres/init-e2e-db.sh` (шаг 9), в CI — отдельный шаг workflow (шаг 11).
 - [ ] 9. Docker Compose для локальной разработки
   - Файлы: `docker-compose.yml`, `docker/dev.Dockerfile` (Node 26 + pnpm), `.dockerignore`
   - Сервисы: `postgres` (`postgres:18-alpine`, healthcheck, порт 5432 открыт для тестов

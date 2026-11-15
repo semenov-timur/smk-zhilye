@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "start": "node --env-file-if-exists=../../.env dist/server/entry.mjs",
-    "typecheck": "astro check"
+    "typecheck": "astro check",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@astrojs/node": "11.1.13",
@@ -16,6 +17,7 @@
     "tailwindcss": "4.3.5"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.12"
+    "@astrojs/check": "0.9.12",
+    "@playwright/test": "1.65.1"
   }
 }
