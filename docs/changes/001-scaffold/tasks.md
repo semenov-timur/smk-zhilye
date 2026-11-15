@@ -102,7 +102,7 @@
     Шаги: `install --frozen-lockfile` → `lint` → `format:check` → `typecheck` →
     `test` → `build` → установка Chromium → `test:e2e`.
   - Результат: workflow готов, проверяется в шаге 13
-- [ ] 12. Документация команд
+- [x] 12. Документация команд
   - Файлы: `README.md` (раздел «Запуск»), `CLAUDE.md` (раздел «Команды»),
     `apps/cms/README.md`, `apps/site/README.md`
   - Результат: установка, запуск, тесты, сборка описаны. Отдельно сказано, что

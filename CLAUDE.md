@@ -16,8 +16,9 @@
 ## Стек
 
 TypeScript (strict) · Astro в режиме SSR · Payload 3 · PostgreSQL ·
-Tailwind CSS · Vitest · Playwright · Docker Compose. Менеджер пакетов и
-точные версии фиксируются в изменении 001-scaffold.
+Tailwind CSS · Vitest · Playwright · Docker Compose. Node.js 26 LTS, pnpm 12.21
+(workspaces: `apps/cms`, `apps/site`). Точные версии — в `package.json`
+и `pnpm-lock.yaml`, новые зависимости ставятся без `^`.
 
 ## Процесс
 
@@ -83,4 +84,18 @@ Tailwind CSS · Vitest · Playwright · Docker Compose. Менеджер пак�
 
 ## Команды
 
-Появятся после изменения 001-scaffold (установка, запуск, тесты, сборка).
+Из корня репозитория. Подробнее — `README.md`.
+
+| Команда | Что делает |
+|---|---|
+| `cp .env.example .env` | Создать локальный `.env` |
+| `docker compose up` (`pnpm dev`) | Postgres, CMS на :3000, сайт на :4321 |
+| `pnpm install` | Зависимости на хосте (для проверок) |
+| `docker compose up -d postgres` | Только база — нужна для `test` и `test:e2e` |
+| `pnpm lint` / `pnpm format:check` | ESLint / Prettier |
+| `pnpm typecheck` | `tsc` в cms, `astro check` в site |
+| `pnpm test` | Vitest (apps/cms) |
+| `pnpm build` | Сборка обоих приложений |
+| `pnpm test:e2e` | Playwright (apps/site), после `pnpm build` |
+| `pnpm --filter cms generate:types` | Обновить типы Payload |
+| `pnpm --filter cms payload migrate:create <имя>` | Миграция после изменения коллекций |
