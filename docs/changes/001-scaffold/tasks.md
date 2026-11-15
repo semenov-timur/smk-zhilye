@@ -51,7 +51,7 @@
     и отдаёт его REST-обработчику Payload (`REST_GET` из `@payloadcms/next/routes`).
     Так проверяется именно HTTP-ответ, а не Local API. Тест берёт БД из `DATABASE_URL`.
   - Результат: `pnpm test` зелёный
-- [ ] 6. `apps/site`: Astro SSR и Tailwind
+- [x] 6. `apps/site`: Astro SSR и Tailwind
   - Файлы: `apps/site/package.json`, `astro.config.mjs` (`output: 'server'`,
     `@astrojs/node` в режиме `standalone`), `src/styles/global.css`
     (Tailwind 4 через `@tailwindcss/vite`), `tsconfig.json` (extends `astro/tsconfigs/strict`)
