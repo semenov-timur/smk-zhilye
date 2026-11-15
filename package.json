@@ -1,0 +1,22 @@
+{
+  "name": "smk-zhilye",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.21.0",
+  "engines": {
+    "node": ">=26.13"
+  },
+  "scripts": {
+    "dev": "docker compose up",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "test:e2e": "pnpm -r --if-present test:e2e",
+    "build": "pnpm -r --if-present build"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3"
+  }
+}

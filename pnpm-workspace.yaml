@@ -1,0 +1,5 @@
+packages:
+  - apps/*
+
+# Точные версии зависимостей без ^ и ~
+saveExact: true

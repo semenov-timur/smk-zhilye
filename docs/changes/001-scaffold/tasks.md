@@ -17,7 +17,7 @@
 
 ## Шаги
 
-- [ ] 1. Корень монорепозитория
+- [x] 1. Корень монорепозитория
   - Файлы: `package.json` (`packageManager: pnpm@12.21.0`, `engines.node: >=26.13`),
     `pnpm-workspace.yaml`, `.nvmrc` (`26`), `tsconfig.base.json` (strict,
     `noUncheckedIndexedAccess`), `pnpm-lock.yaml`
