@@ -1,0 +1,77 @@
+# Локальная разработка: `docker compose up` (или `pnpm dev`) из корня.
+# Переменные берутся из .env (скопируйте .env.example).
+name: smk-zhilye
+
+x-app: &app
+  build:
+    context: .
+    dockerfile: docker/dev.Dockerfile
+  image: smk-zhilye-dev
+  working_dir: /app
+  env_file: .env
+  volumes:
+    - .:/app
+    # Зависимости собираются под Linux и живут в томах, а не в папках хоста
+    - node_modules:/app/node_modules
+    - cms_node_modules:/app/apps/cms/node_modules
+    - site_node_modules:/app/apps/site/node_modules
+    - cms_next:/app/apps/cms/.next
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./docker/postgres/init-e2e-db.sh:/docker-entrypoint-initdb.d/init-e2e-db.sh:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"']
+      interval: 2s
+      timeout: 5s
+      retries: 30
+
+  # Разово ставит зависимости и завершается
+  deps:
+    <<: *app
+    command: pnpm install --frozen-lockfile
+    environment:
+      # Хранилище pnpm в том же томе, что и node_modules, — чтобы работали жёсткие ссылки
+      PNPM_CONFIG_STORE_DIR: /app/node_modules/.pnpm-store
+
+  cms:
+    <<: *app
+    command: pnpm --filter cms dev
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    ports:
+      - '3000:3000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      deps:
+        condition: service_completed_successfully
+
+  site:
+    <<: *app
+    command: pnpm --filter site dev
+    environment:
+      CMS_API_URL: http://cms:3000
+    ports:
+      - '4321:4321'
+    depends_on:
+      deps:
+        condition: service_completed_successfully
+      cms:
+        condition: service_started
+
+volumes:
+  postgres_data:
+  node_modules:
+  cms_node_modules:
+  site_node_modules:
+  cms_next:

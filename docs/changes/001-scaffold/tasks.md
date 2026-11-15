@@ -78,7 +78,7 @@
     Dev и Vitest синхронизируют схему без миграций (push), и CMS в production-режиме
     на такой базе зависает на интерактивном вопросе. Базу `_e2e` создаёт скрипт
     `docker/postgres/init-e2e-db.sh` (шаг 9), в CI — отдельный шаг workflow (шаг 11).
-- [ ] 9. Docker Compose для локальной разработки
+- [x] 9. Docker Compose для локальной разработки
   - Файлы: `docker-compose.yml`, `docker/dev.Dockerfile` (Node 26 + pnpm), `.dockerignore`
   - Сервисы: `postgres` (`postgres:18-alpine`, healthcheck, порт 5432 открыт для тестов
     с хоста), `deps` (разово ставит зависимости в именованные тома), `cms`, `site`.
@@ -86,6 +86,8 @@
   - Исходники монтируются с хоста, `node_modules` лежат в томах (нужны Linux-сборки
     `sharp`). Внутри Compose переопределяем `DATABASE_URL` (хост `postgres`)
     и `CMS_API_URL=http://cms:3000`. Для hot reload на macOS включаем polling.
+  - **Отклонение:** polling не понадобился — Docker Desktop передаёт события файлов,
+    hot reload сайта проверен. Добавлен `docker/postgres/init-e2e-db.sh` (см. шаг 8).
   - Корневой скрипт `pnpm dev` = `docker compose up`
   - Результат: AC-1, AC-2
 - [ ] 10. Переменные окружения и секреты
