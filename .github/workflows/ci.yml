@@ -1,0 +1,86 @@
+# Проверки на каждый pull request в develop и main:
+# линтер, форматирование, типы, тесты, сборка и e2e.
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: smk
+          POSTGRES_PASSWORD: ci-password
+          POSTGRES_DB: smk
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U smk -d smk"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 30
+
+    # Тестовые значения только для CI — не секреты
+    env:
+      DATABASE_URL: postgres://smk:ci-password@localhost:5432/smk
+      PAYLOAD_SECRET: ci-only-payload-secret
+      CMS_PUBLIC_URL: http://localhost:3000
+      CMS_API_URL: http://localhost:3000
+      SITE_URL: http://localhost:4321
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # Версия pnpm берётся из поля packageManager в package.json
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Установить зависимости
+        run: pnpm install --frozen-lockfile
+
+      - name: Линтер
+        run: pnpm lint
+
+      - name: Форматирование
+        run: pnpm format:check
+
+      - name: Проверка типов
+        run: pnpm typecheck
+
+      - name: Тесты
+        run: pnpm test
+
+      - name: Сборка
+        run: pnpm build
+
+      # CMS в e2e работает в production-режиме на отдельной базе (см. playwright.config.ts)
+      - name: Создать базу для e2e
+        run: psql postgres://smk:ci-password@localhost:5432/smk -c 'CREATE DATABASE smk_e2e'
+
+      - name: Установить браузер для Playwright
+        run: pnpm --filter site exec playwright install --with-deps chromium
+
+      - name: E2E-тесты
+        run: pnpm test:e2e
+
+      - name: Отчёт Playwright
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: apps/site/playwright-report/
+          retention-days: 7

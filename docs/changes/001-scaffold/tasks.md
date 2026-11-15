@@ -95,7 +95,7 @@
   - Добавить `CMS_API_URL` и комментарии к каждой переменной, убрать строку
     «список уточняется в 001». Проверить `.gitignore` и что в git нет `.env`.
   - Результат: AC-8
-- [ ] 11. CI на GitHub Actions
+- [x] 11. CI на GitHub Actions
   - Файлы: `.github/workflows/ci.yml`
   - Запуск на `pull_request` в `develop` и `main`. Сервис Postgres 18,
     Node из `.nvmrc`, pnpm из `packageManager`.
