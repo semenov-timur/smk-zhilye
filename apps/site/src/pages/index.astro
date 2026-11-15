@@ -1,14 +1,36 @@
 ---
+import { CMS_API_URL } from 'astro:env/server'
+
+import { getCmsStatus } from '../lib/cms'
 import '../styles/global.css'
+
+// Техническая заглушка до появления модели контента: название компании —
+// служебная подпись, статус — проверка связи сайта с CMS.
+const cmsStatus = await getCmsStatus(CMS_API_URL)
+const statusText = cmsStatus === 'available' ? 'CMS: доступна' : 'CMS: недоступна'
 ---
 
 <html lang="ru">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>СМК «Жильё»</title>
+    <title>ООО СМК «Жильё»</title>
   </head>
-  <body>
-    <h1 class="text-2xl">СМК «Жильё»</h1>
+  <body class="bg-white font-sans text-neutral-900">
+    <main class="mx-auto max-w-3xl px-4 py-12">
+      <h1 class="text-2xl font-semibold sm:text-3xl">ООО СМК «Жильё»</h1>
+      <p
+        data-testid="cms-status"
+        data-status={cmsStatus}
+        class:list={[
+          'mt-4 inline-block rounded border px-3 py-1 text-sm',
+          cmsStatus === 'available'
+            ? 'border-neutral-400 text-neutral-900'
+            : 'border-neutral-300 text-neutral-500',
+        ]}
+      >
+        {statusText}
+      </p>
+    </main>
   </body>
 </html>

@@ -57,7 +57,7 @@
     (Tailwind 4 через `@tailwindcss/vite`), `tsconfig.json` (extends `astro/tsconfigs/strict`)
   - Скрипты: `dev`, `build`, `start` (`node dist/server/entry.mjs`), `typecheck` (`astro check`)
   - Результат: `pnpm --filter site dev` открывает сайт на `:4321`
-- [ ] 7. Главная-заглушка со статусом CMS
+- [x] 7. Главная-заглушка со статусом CMS
   - Файлы: `apps/site/src/lib/cms.ts`, `apps/site/src/pages/index.astro`
   - `getCmsStatus()` на сервере делает `GET ${CMS_API_URL}/api/users/me` с таймаутом 2 с.
     Ответ 2xx — «CMS: доступна». Сетевая ошибка, таймаут или не-2xx —
