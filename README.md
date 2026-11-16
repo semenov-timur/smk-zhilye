@@ -16,6 +16,8 @@
 |---|---|
 | `apps/site` | Сайт на Astro |
 | `apps/cms` | Payload: коллекции, хуки, админка |
+| `docker/`, `docker-compose.yml` | Локальный запуск в Docker |
+| `.github/workflows/` | CI |
 | `docs/product.md` | Что делаем и для кого, объём этапов |
 | `docs/architecture.md` | Стек, схема, модель данных, окружения |
 | `docs/design-system.md` | Цвета, шрифты, компоненты (после согласования макетов) |

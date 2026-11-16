@@ -22,15 +22,17 @@
 | База данных | PostgreSQL | Через официальный адаптер Payload |
 | Тесты | Vitest (модули, интеграция), Playwright (e2e) | |
 | Инфраструктура | Docker Compose, Nginx/Caddy, российский VPS | |
-| CI | GitHub Actions (уточняется: GitHub или GitLab) | Линтер, типы, тесты, сборка на каждый PR |
+| CI | GitHub Actions | Линтер, типы, тесты, сборка, e2e на каждый PR |
 
 Решения и их причины: [decisions/](decisions/).
 
 ## Структура репозитория
 
 ```
-apps/site     — сайт на Astro
-apps/cms      — Payload: коллекции, глобальные настройки, хуки
+apps/site     — сайт на Astro (SSR, Tailwind), e2e на Playwright
+apps/cms      — Payload на Next.js: коллекции, глобальные настройки, хуки, миграции
+docker/       — dev-образ и скрипты инициализации Postgres для Docker Compose
+.github/      — CI (GitHub Actions)
 docs/         — продукт, архитектура, дизайн-система, решения, спецификации
 .claude/      — скиллы для ИИ-агента
 ```
@@ -56,7 +58,7 @@ docs/         — продукт, архитектура, дизайн-сист�
 
 | Окружение | Где | Назначение |
 |---|---|---|
-| local | Docker Compose на машине разработчика | Разработка |
+| local | Docker Compose на машине разработчика | Разработка. Подробности — [specs/infra.md](specs/infra.md) |
 | production | VPS в РФ | Боевой сайт smk-zhilye.ru и админка |
 
 Тестовый стенд добавим, если понадобится показывать заказчику работу до релиза.
