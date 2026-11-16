@@ -1,0 +1,9 @@
+packages:
+  - apps/*
+
+# Точные версии зависимостей без ^ и ~
+saveExact: true
+
+# Пакеты, которым разрешено запускать скрипты установки
+allowBuilds:
+  esbuild: true

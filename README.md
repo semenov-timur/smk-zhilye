@@ -7,8 +7,8 @@
 
 ## Состояние
 
-Проект на старте: есть документация и процесс, кода приложений пока нет.
-Первое изменение — каркас монорепозитория: `docs/changes/001-scaffold/`.
+Есть каркас: сайт и админка запускаются одной командой, проверки идут в CI.
+Страниц и контента пока нет — на главной техническая заглушка.
 
 ## Где что лежит
 
@@ -39,4 +39,54 @@
 
 ## Запуск
 
-Команды появятся после изменения `001-scaffold`.
+Нужны Docker Desktop (Compose v2). Для проверок с хоста — Node.js 26 LTS
+(версия в `.nvmrc`) и pnpm 12.21.0: `npm i -g pnpm@12.21.0`.
+
+```bash
+cp .env.example .env
+docker compose up        # или pnpm dev
+```
+
+Первый запуск ставит зависимости внутри Docker, это около двух минут.
+
+| Что | Адрес |
+|---|---|
+| Сайт | http://localhost:4321 |
+| Админка | http://localhost:3000/admin — при первом входе создайте пользователя |
+| PostgreSQL | localhost:5432 |
+
+Остановить — `docker compose down`, сбросить базу и зависимости — `docker compose down -v`.
+
+## Проверки
+
+Запускаются с хоста из корня репозитория:
+
+```bash
+pnpm install
+docker compose up -d postgres   # база нужна для test и test:e2e
+
+pnpm lint            # ESLint
+pnpm format:check    # Prettier (pnpm format — исправить)
+pnpm typecheck       # tsc (cms) и astro check (site)
+pnpm test            # Vitest, apps/cms
+pnpm build           # сборка обоих приложений
+
+pnpm --filter site exec playwright install chromium   # один раз
+pnpm test:e2e        # Playwright, apps/site; нужен pnpm build
+```
+
+`pnpm test:e2e` сам запускает CMS (на базе `<POSTGRES_DB>_e2e`) и сайт из сборок.
+Если на портах 3000 и 4321 уже работает `docker compose up`, тесты используют его.
+
+Те же проверки запускает CI (`.github/workflows/ci.yml`) на каждый pull request
+в `develop` и `main`.
+
+## Изменили коллекции Payload
+
+```bash
+pnpm --filter cms generate:types                  # обновить src/payload-types.ts
+pnpm --filter cms payload migrate:create <имя>    # миграция для production
+```
+
+В dev Payload меняет схему базы сам, в production и e2e схема создаётся
+только миграциями из `apps/cms/src/migrations/`.

@@ -36,3 +36,7 @@ Thumbs.db
 
 # Локальные настройки Claude
 .claude/settings.local.json
+
+# Файлы, которые генерируют Next.js и TypeScript
+next-env.d.ts
+*.tsbuildinfo

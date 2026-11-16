@@ -1,0 +1,10 @@
+# Документацию форматируем руками
+**/*.md
+
+pnpm-lock.yaml
+
+# Файлы, которые генерирует Payload
+apps/cms/src/payload-types.ts
+apps/cms/src/app/(payload)/admin/importMap.js
+apps/cms/src/migrations/
+apps/cms/next-env.d.ts
